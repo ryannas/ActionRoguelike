@@ -6,6 +6,10 @@
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
+// Forward Declaration
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
 {
@@ -16,7 +20,14 @@ public:
 	ASCharacter();
 
 protected:
-	// Called when the game starts or when spawned
+	// For Third-Person Perspective
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComponent;
+	
+	// Called when the game starts or when spawned (first loaded in level)
 	virtual void BeginPlay() override;
 
 public:	
