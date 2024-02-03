@@ -28,6 +28,11 @@ void ASCharacter::BeginPlay()
 	
 }
 
+void ASCharacter::MoveForward(float Value)
+{
+	AddMovementInput(GetActorForwardVector(), Value);
+}
+
 // Called every frame
 void ASCharacter::Tick(float DeltaTime)
 {
@@ -40,5 +45,10 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// ASCharacter::MoveForward is Implemented by Ourselves
+	PlayerInputComponent->BindAxis("MoveForward", this, &ASCharacter::MoveForward);
+
+	// AddControllerYawInput is Implemented by Pawn
+	PlayerInputComponent->BindAxis("Turn", this, &ASCharacter::AddControllerYawInput);
 }
 
