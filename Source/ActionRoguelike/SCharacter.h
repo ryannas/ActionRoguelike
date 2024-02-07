@@ -20,6 +20,10 @@ public:
 	ASCharacter();
 
 protected:
+	// For Generating Projectile
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass;
+	
 	// For Third-Person Perspective
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComponent;
@@ -33,6 +37,8 @@ protected:
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);
+
+	void PrimaryAttack();
 
 public:	
 	// Called every frame
