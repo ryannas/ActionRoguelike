@@ -9,6 +9,7 @@
 // Forward Declaration
 class USpringArmComponent;
 class UCameraComponent;
+class USInteractComponent;
 
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
@@ -30,6 +31,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	USInteractComponent* InteractComponent;
 	
 	// Called when the game starts or when spawned (first loaded in level)
 	virtual void BeginPlay() override;
@@ -39,6 +43,8 @@ protected:
 	void MoveRight(float Value);
 
 	void PrimaryAttack();
+
+	void PrimaryInteract();
 
 public:	
 	// Called every frame
