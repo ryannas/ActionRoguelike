@@ -9,3 +9,5 @@ Open Unreal Store in Epic Client, install following free assets:
 * Paragon:Minions
 * Ancient Treasures
 * Industry Props Pack 6
+
+Then install free example: Content Example, and Copy ContentExample/Content/ExampleContent to Content folder.
