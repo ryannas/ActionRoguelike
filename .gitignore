@@ -75,6 +75,7 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 # Large assets should be downloaded via Epic
+Content/ExampleContent/
 Content/ParagonGideon/
 Content/ParagonMinions/
 Content/IndustryPropsPack6/
