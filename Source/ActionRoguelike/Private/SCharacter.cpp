@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ASCharacter::ASCharacter()
@@ -74,13 +75,43 @@ void ASCharacter::PrimaryAttack()
 
 void ASCharacter::PrimaryAttack_TimeElapsed()
 {
-	// Get Location of Hand
+	// Get Hand Location
 	const FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
-	const FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
+	FRotator SpawnRotation;
+	
+	// Ignore Player Character
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this);
+
+	// Add More Object Types to Trace
+	FCollisionObjectQueryParams ObjectQueryParams;
+	ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+	ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldStatic);
+	ObjectQueryParams.AddObjectTypesToQuery(ECC_PhysicsBody);
+	ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
+
+	// From Camera Location to Trace a Ray
+	FVector Start = CameraComponent->GetComponentLocation();
+	FVector End = Start + GetControlRotation().Vector() * 10000;
+	
+	FHitResult HitResult;
+	GetWorld()->LineTraceSingleByObjectType(HitResult, Start, End, ObjectQueryParams, QueryParams);
+
+	AActor* HitActor = HitResult.GetActor();
+	if (HitActor != nullptr)
+	{
+		SpawnRotation = UKismetMathLibrary::FindLookAtRotation(HandLocation, HitResult.ImpactPoint);
+	}
+	else
+	{
+		SpawnRotation = GetControlRotation();
+	}
 
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	SpawnParameters.Instigator = this;
+	
+	const FTransform SpawnTM = FTransform(SpawnRotation, HandLocation);
 
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParameters);
 }
