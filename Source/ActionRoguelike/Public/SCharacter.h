@@ -30,6 +30,9 @@ protected:
 	UAnimMontage* AttackAnimation;
 
 	FTimerHandle TimerHandle_PrimaryAttack;
+
+	UPROPERTY(EditAnywhere)
+	FString HandSocketName;
 	
 	// For Third-Person Perspective
 	UPROPERTY(VisibleAnywhere)

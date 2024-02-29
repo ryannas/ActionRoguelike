@@ -76,7 +76,7 @@ void ASCharacter::PrimaryAttack()
 void ASCharacter::PrimaryAttack_TimeElapsed()
 {
 	// Get Hand Location
-	const FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+	const FVector HandLocation = GetMesh()->GetSocketLocation(*HandSocketName);
 	FRotator SpawnRotation;
 	
 	// Ignore Player Character
